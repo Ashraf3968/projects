@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+* {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-ink text-platinum font-body antialiased;
+  background-image: radial-gradient(circle at 10% 20%, rgba(103, 86, 203, 0.15), transparent 45%), radial-gradient(circle at 90% 0%, rgba(212, 180, 90, 0.18), transparent 50%);
+  background-attachment: fixed;
+}
+
+::selection {
+  background: rgba(212, 180, 90, 0.35);
+  color: #fff;
+}
+
+.section {
+  @apply py-20 md:py-28;
+}
+
+.glass {
+  @apply bg-glass border border-white/10 backdrop-blur-xl;
+}
+
+.glass-strong {
+  @apply bg-glass-strong border border-white/10 backdrop-blur-2xl;
+}
+
+.btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition duration-300;
+}
+
+.btn-primary {
+  @apply btn bg-gradient-to-r from-[#e6c77a] to-[#c79a38] text-ink shadow-gold hover:-translate-y-0.5;
+}
+
+.btn-outline {
+  @apply btn border border-white/30 text-platinum hover:bg-white/10;
+}
+
+.btn-ghost {
+  @apply btn border border-white/10 text-platinum hover:bg-white/10;
+}
+
+.link-soft {
+  @apply text-muted hover:text-platinum transition;
+}
+
+.grid-dots {
+  background-image: linear-gradient(transparent 95%, rgba(255, 255, 255, 0.04)),
+    linear-gradient(90deg, transparent 95%, rgba(255, 255, 255, 0.04));
+  background-size: 52px 52px;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
