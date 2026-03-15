@@ -69,6 +69,8 @@ export default function Navbar() {
               </Link>
             );
           })}
+            {/* Add Purchase link */}
+            <Link href="/purchase" className={`hover:text-platinum transition ${pathname === "/purchase" ? "text-platinum" : ""}`}>Purchase</Link>
         </div>
 
         <div className="hidden items-center gap-3 lg:flex">
