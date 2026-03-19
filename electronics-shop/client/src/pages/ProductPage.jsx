@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { api } from "../api/client";
 import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
-import { currency, formatDate } from "../lib/utils";
+import { currency, formatDate, resolveMediaUrl } from "../lib/utils";
 import RatingStars from "../components/shop/RatingStars";
 
 const ProductPage = () => {
@@ -37,7 +37,7 @@ const ProductPage = () => {
     <div className="section-shell space-y-10">
       <div className="grid gap-8 lg:grid-cols-[1fr_0.9fr]">
         <div className="card overflow-hidden">
-          <img src={product.image_url ? `http://localhost:5000${product.image_url}` : "/placeholder-product.svg"} alt={product.name} className="h-full w-full object-cover" />
+          <img src={resolveMediaUrl(product.image_url)} alt={product.name} className="h-full w-full object-cover" />
         </div>
         <div className="card p-8">
           <p className="text-xs uppercase tracking-[0.3em] text-sky-200">{product.category?.name}</p>
@@ -65,7 +65,7 @@ const ProductPage = () => {
               <div key={item.id} className="rounded-[24px] border border-white/10 p-5">
                 <RatingStars value={item.rating} />
                 <p className="mt-3 text-slate-300">{item.comment}</p>
-                <p className="mt-3 text-sm font-semibold">{item.name} � {formatDate(item.created_at)}</p>
+                <p className="mt-3 text-sm font-semibold">{item.name} • {formatDate(item.created_at)}</p>
               </div>
             ))}
           </div>
@@ -85,3 +85,4 @@ const ProductPage = () => {
 };
 
 export default ProductPage;
+

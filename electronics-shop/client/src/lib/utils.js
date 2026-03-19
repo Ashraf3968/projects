@@ -8,3 +8,10 @@ export const currency = (value) =>
 export const formatDate = (value) => new Date(value).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
 
 export const classNames = (...values) => values.filter(Boolean).join(" ");
+
+export const resolveMediaUrl = (value) => {
+  if (!value) return "/placeholder-product.svg";
+  if (/^(data:|https?:\/\/)/i.test(value)) return value;
+  if (value.startsWith("/")) return `http://localhost:5000${value}`;
+  return value;
+};

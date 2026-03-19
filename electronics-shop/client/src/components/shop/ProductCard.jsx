@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import { ShoppingBag } from "lucide-react";
-import { currency } from "../../lib/utils";
+import { currency, resolveMediaUrl } from "../../lib/utils";
 
 const ProductCard = ({ product, onAdd }) => (
   <article className="card overflow-hidden">
     <div className="relative aspect-[4/3] overflow-hidden bg-slate-900">
-      <img src={product.image_url ? `http://localhost:5000${product.image_url}` : "/placeholder-product.svg"} alt={product.name} className="h-full w-full object-cover transition duration-500 hover:scale-105" />
+      <img src={resolveMediaUrl(product.image_url)} alt={product.name} className="h-full w-full object-cover transition duration-500 hover:scale-105" />
       <div className="absolute left-4 top-4 rounded-full bg-black/50 px-3 py-1 text-xs text-slate-200">{product.category?.name || "General"}</div>
     </div>
     <div className="space-y-4 p-5">

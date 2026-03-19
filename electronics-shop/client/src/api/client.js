@@ -1,7 +1,10 @@
+import { localApi } from "./localApi";
+
 const defaultApiBase = import.meta.env.PROD ? "/api" : "http://localhost:5000/api";
 const API_BASE = (import.meta.env.VITE_API_BASE_URL || defaultApiBase).replace(/\/$/, "");
+const USE_LOCAL_DATA = import.meta.env.VITE_USE_LOCAL_DATA === "true" || (import.meta.env.PROD && !import.meta.env.VITE_API_BASE_URL);
 
-const request = async (path, options = {}) => {
+const remoteRequest = async (path, options = {}) => {
   const token = localStorage.getItem("electronics_token");
   const headers = {
     ...(options.body instanceof FormData ? {} : { "Content-Type": "application/json" }),
@@ -23,36 +26,51 @@ const request = async (path, options = {}) => {
   }
 
   if (!isJson) {
-    throw new Error("Store API is not reachable. Set VITE_API_BASE_URL in Vercel or deploy the backend API.");
+    throw new Error("Store API returned a non-JSON response.");
   }
 
   return data;
 };
 
+const execute = async (path, fallback, options) => {
+  if (USE_LOCAL_DATA) {
+    return fallback();
+  }
+
+  try {
+    return await remoteRequest(path, options);
+  } catch (error) {
+    if (import.meta.env.PROD) {
+      return fallback();
+    }
+    throw error;
+  }
+};
+
 export const api = {
-  bootstrap: () => request("/store/bootstrap"),
-  products: (params = "") => request(`/store/products${params}`),
-  product: (slug) => request(`/store/products/${slug}`),
-  contact: (payload) => request("/store/contact", { method: "POST", body: JSON.stringify(payload) }),
-  signup: (payload) => request("/auth/signup", { method: "POST", body: JSON.stringify(payload) }),
-  login: (payload) => request("/auth/login", { method: "POST", body: JSON.stringify(payload) }),
-  me: () => request("/auth/me"),
-  createOrder: (payload) => request("/store/orders", { method: "POST", body: JSON.stringify(payload) }),
-  submitReview: (payload) => request("/store/reviews", { method: "POST", body: JSON.stringify(payload) }),
-  adminDashboard: () => request("/admin/dashboard"),
-  adminProducts: () => request("/admin/products"),
-  adminSaveProduct: (formData) => request("/admin/products", { method: "POST", body: formData }),
-  adminDeleteProduct: (id) => request(`/admin/products/${id}`, { method: "DELETE" }),
-  adminCategories: () => request("/admin/categories"),
-  adminSaveCategory: (payload) => request("/admin/categories", { method: "POST", body: JSON.stringify(payload) }),
-  adminDeleteCategory: (id) => request(`/admin/categories/${id}`, { method: "DELETE" }),
-  adminOrders: () => request("/admin/orders"),
-  adminOrderStatus: (id, status) => request(`/admin/orders/${id}/status`, { method: "PATCH", body: JSON.stringify({ status }) }),
-  adminReviews: () => request("/admin/reviews"),
-  adminReviewStatus: (id, status) => request(`/admin/reviews/${id}/status`, { method: "PATCH", body: JSON.stringify({ status }) }),
-  adminDeleteReview: (id) => request(`/admin/reviews/${id}`, { method: "DELETE" }),
-  adminMessages: () => request("/admin/messages"),
-  adminUsers: () => request("/admin/users"),
-  adminSettings: () => request("/admin/settings"),
-  adminSaveSettings: (payload) => request("/admin/settings", { method: "PUT", body: JSON.stringify(payload) })
+  bootstrap: () => execute("/store/bootstrap", () => localApi.bootstrap()),
+  products: (params = "") => execute(`/store/products${params}`, () => localApi.products(params)),
+  product: (slug) => execute(`/store/products/${slug}`, () => localApi.product(slug)),
+  contact: (payload) => execute("/store/contact", () => localApi.contact(payload), { method: "POST", body: JSON.stringify(payload) }),
+  signup: (payload) => execute("/auth/signup", () => localApi.signup(payload), { method: "POST", body: JSON.stringify(payload) }),
+  login: (payload) => execute("/auth/login", () => localApi.login(payload), { method: "POST", body: JSON.stringify(payload) }),
+  me: () => execute("/auth/me", () => localApi.me()),
+  createOrder: (payload) => execute("/store/orders", () => localApi.createOrder(payload), { method: "POST", body: JSON.stringify(payload) }),
+  submitReview: (payload) => execute("/store/reviews", () => localApi.submitReview(payload), { method: "POST", body: JSON.stringify(payload) }),
+  adminDashboard: () => execute("/admin/dashboard", () => localApi.adminDashboard()),
+  adminProducts: () => execute("/admin/products", () => localApi.adminProducts()),
+  adminSaveProduct: (formData) => execute("/admin/products", () => localApi.adminSaveProduct(formData), { method: "POST", body: formData }),
+  adminDeleteProduct: (id) => execute(`/admin/products/${id}`, () => localApi.adminDeleteProduct(id), { method: "DELETE" }),
+  adminCategories: () => execute("/admin/categories", () => localApi.adminCategories()),
+  adminSaveCategory: (payload) => execute("/admin/categories", () => localApi.adminSaveCategory(payload), { method: "POST", body: JSON.stringify(payload) }),
+  adminDeleteCategory: (id) => execute(`/admin/categories/${id}`, () => localApi.adminDeleteCategory(id), { method: "DELETE" }),
+  adminOrders: () => execute("/admin/orders", () => localApi.adminOrders()),
+  adminOrderStatus: (id, status) => execute(`/admin/orders/${id}/status`, () => localApi.adminOrderStatus(id, status), { method: "PATCH", body: JSON.stringify({ status }) }),
+  adminReviews: () => execute("/admin/reviews", () => localApi.adminReviews()),
+  adminReviewStatus: (id, status) => execute(`/admin/reviews/${id}/status`, () => localApi.adminReviewStatus(id, status), { method: "PATCH", body: JSON.stringify({ status }) }),
+  adminDeleteReview: (id) => execute(`/admin/reviews/${id}`, () => localApi.adminDeleteReview(id), { method: "DELETE" }),
+  adminMessages: () => execute("/admin/messages", () => localApi.adminMessages()),
+  adminUsers: () => execute("/admin/users", () => localApi.adminUsers()),
+  adminSettings: () => execute("/admin/settings", () => localApi.adminSettings()),
+  adminSaveSettings: (payload) => execute("/admin/settings", () => localApi.adminSaveSettings(payload), { method: "PUT", body: JSON.stringify(payload) })
 };
