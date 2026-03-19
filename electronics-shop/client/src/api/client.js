@@ -1,4 +1,5 @@
-const API_BASE = (import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api").replace(/\/$/, "");
+const defaultApiBase = import.meta.env.PROD ? "/api" : "http://localhost:5000/api";
+const API_BASE = (import.meta.env.VITE_API_BASE_URL || defaultApiBase).replace(/\/$/, "");
 
 const request = async (path, options = {}) => {
   const token = localStorage.getItem("electronics_token");
