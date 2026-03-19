@@ -111,6 +111,90 @@ const productSeeds = [
     featured: false,
     popular: false,
     specs: ["HDMI 4K", "100W pass-through", "Gigabit ethernet", "SD + microSD"]
+  },
+  {
+    category: "mobiles",
+    name: "Orbit Note Air",
+    slug: "orbit-note-air",
+    image_url: "/products-mobile.svg",
+    short_description: "Slim 5G phone with bright display and fast charging.",
+    description: "Orbit Note Air balances battery life, clean design, and dependable cameras for daily work and entertainment.",
+    price: 42999,
+    compare_price: 46999,
+    stock: 26,
+    featured: false,
+    popular: true,
+    specs: ["6.5-inch OLED", "128GB storage", "45W fast charge", "Dual stereo speakers"]
+  },
+  {
+    category: "laptops",
+    name: "TitanBook Creator 16",
+    slug: "titanbook-creator-16",
+    image_url: "/products-laptop.svg",
+    short_description: "Performance laptop for editing, 3D work, and multitasking.",
+    description: "TitanBook Creator 16 delivers a large high-refresh display, powerful graphics, and a studio-ready keyboard deck.",
+    price: 154999,
+    compare_price: 169999,
+    stock: 7,
+    featured: true,
+    popular: true,
+    specs: ["16-inch 3.2K 120Hz", "32GB RAM", "1TB SSD", "RTX-class graphics"]
+  },
+  {
+    category: "headphones",
+    name: "EchoBuds Lite",
+    slug: "echobuds-lite",
+    image_url: "/products-headphones.svg",
+    short_description: "Compact true wireless earbuds with clear calls and punchy sound.",
+    description: "EchoBuds Lite keeps daily listening simple with low-latency pairing, reliable microphones, and comfortable all-day fit.",
+    price: 5999,
+    compare_price: 7499,
+    stock: 58,
+    featured: false,
+    popular: true,
+    specs: ["ANC earbuds", "Bluetooth 5.4", "28hr case battery", "IPX4 splash resistance"]
+  },
+  {
+    category: "smart-watches",
+    name: "Stride Fit Band Pro",
+    slug: "stride-fit-band-pro",
+    image_url: "/products-watch.svg",
+    short_description: "Fitness-first wearable with sleep insights and long battery life.",
+    description: "Stride Fit Band Pro tracks workouts, heart rate, and recovery while staying lightweight for daily wear.",
+    price: 8999,
+    compare_price: 10999,
+    stock: 33,
+    featured: false,
+    popular: false,
+    specs: ["1.9-inch AMOLED", "14-day battery", "100+ sport modes", "SpO2 tracking"]
+  },
+  {
+    category: "tvs",
+    name: "CineView Mini LED 55",
+    slug: "cineview-mini-led-55",
+    image_url: "/products-tv.svg",
+    short_description: "55-inch smart TV with sharp contrast and gaming-ready refresh rate.",
+    description: "CineView Mini LED 55 brings bright HDR scenes, smooth sports playback, and a responsive smart interface to modern living rooms.",
+    price: 68999,
+    compare_price: 75999,
+    stock: 12,
+    featured: true,
+    popular: false,
+    specs: ["55-inch 4K mini LED", "144Hz gaming mode", "Dolby Atmos", "Hands-free voice control"]
+  },
+  {
+    category: "accessories",
+    name: "ChargeSphere 3-in-1 Stand",
+    slug: "chargesphere-3-in-1-stand",
+    image_url: "/products-hub.svg",
+    short_description: "Wireless charging dock for phone, earbuds, and smartwatch.",
+    description: "ChargeSphere keeps bedside and desk setups tidy with one compact stand for all your everyday charging needs.",
+    price: 4999,
+    compare_price: 6299,
+    stock: 48,
+    featured: false,
+    popular: true,
+    specs: ["15W phone charging", "Earbuds pad", "Watch puck mount", "Fold-flat design"]
   }
 ];
 
@@ -229,10 +313,35 @@ const createInitialDb = () => {
 
 const migrateDb = (db) => {
   const productImageMap = Object.fromEntries(productSeeds.map((item) => [item.slug, item.image_url || null]));
+  const categoryIdBySlug = Object.fromEntries(db.categories.map((item) => [item.slug, item.id]));
   db.products = db.products.map((item) => ({
     ...item,
     image_url: item.image_url || productImageMap[item.slug] || null
   }));
+
+  const existingSlugs = new Set(db.products.map((item) => item.slug));
+  const createdAt = nowIso();
+  for (const seed of productSeeds) {
+    if (existingSlugs.has(seed.slug)) continue;
+    db.products.push({
+      id: nextId(db.products),
+      category_id: categoryIdBySlug[seed.category] || null,
+      name: seed.name,
+      slug: seed.slug,
+      short_description: seed.short_description,
+      description: seed.description,
+      price: seed.price,
+      compare_price: seed.compare_price,
+      stock: seed.stock,
+      featured: seed.featured,
+      popular: seed.popular,
+      image_url: seed.image_url || null,
+      video_url: "",
+      specs: seed.specs,
+      created_at: createdAt,
+      updated_at: createdAt
+    });
+  }
 
   const admin = db.users.find((item) => item.role === "admin");
   if (admin) {

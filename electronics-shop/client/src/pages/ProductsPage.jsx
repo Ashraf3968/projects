@@ -44,6 +44,22 @@ const ProductsPage = () => {
           <option value="price_desc">Price: High to Low</option>
         </select>
       </div>
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <p className="text-sm text-slate-400">{loading ? "Loading catalog..." : `${products.length} product${products.length === 1 ? "" : "s"} found`}</p>
+        <div className="flex flex-wrap gap-2">
+          <button type="button" onClick={() => setFilters({ search: "", category: "", sort: "latest" })} className="rounded-full border border-white/10 px-4 py-2 text-xs text-slate-300 transition hover:bg-white/5">Reset Filters</button>
+          {data.categories.slice(0, 4).map((category) => (
+            <button
+              key={category.id}
+              type="button"
+              onClick={() => setFilters((current) => ({ ...current, category: category.slug }))}
+              className={`rounded-full border px-4 py-2 text-xs transition ${filters.category === category.slug ? "border-sky-400/40 bg-sky-400/10 text-sky-200" : "border-white/10 text-slate-300 hover:bg-white/5"}`}
+            >
+              {category.name}
+            </button>
+          ))}
+        </div>
+      </div>
       {loading ? (
         <div className="text-slate-300">Loading products...</div>
       ) : products.length === 0 ? (

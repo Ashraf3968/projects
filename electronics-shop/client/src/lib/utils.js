@@ -12,6 +12,7 @@ export const classNames = (...values) => values.filter(Boolean).join(" ");
 export const resolveMediaUrl = (value) => {
   if (!value) return "/placeholder-product.svg";
   if (/^(data:|https?:\/\/)/i.test(value)) return value;
-  if (value.startsWith("/")) return `http://localhost:5000${value}`;
+  if (value.startsWith("/uploads/")) return `http://localhost:5000${value}`;
+  if (value.startsWith("/")) return value;
   return value;
 };
