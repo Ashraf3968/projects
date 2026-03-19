@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-labelledby="title desc">
+  <title id="title">Headphones product artwork</title>
+  <desc id="desc">Illustrated wireless over-ear headphones.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <circle cx="190" cy="170" r="130" fill="#a855f7" opacity=".1"/>
+  <circle cx="620" cy="420" r="140" fill="#22d3ee" opacity=".11"/>
+  <path d="M275 320c0-100 56-175 125-175s125 75 125 175" fill="none" stroke="#cbd5e1" stroke-width="28" stroke-linecap="round"/>
+  <rect x="220" y="280" width="92" height="170" rx="40" fill="#0f172a" stroke="#38bdf8" stroke-width="14"/>
+  <rect x="488" y="280" width="92" height="170" rx="40" fill="#0f172a" stroke="#34d399" stroke-width="14"/>
+  <rect x="252" y="315" width="28" height="96" rx="14" fill="#38bdf8"/>
+  <rect x="520" y="315" width="28" height="96" rx="14" fill="#34d399"/>
+  <text x="60" y="520" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="40" font-weight="700">Pulse ANC Studio</text>
+</svg>

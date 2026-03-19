@@ -58,7 +58,7 @@ const ensureUsers = () => {
     VALUES (?, ?, ?, ?, ?, ?)
   `);
 
-  insert.run("Admin User", "admin@nexora.local", "+91 90000 11111", bcrypt.hashSync("Admin123!", 10), "admin", nowIso());
+  insert.run("Admin User", "admin@digitquo.com", "+91 90000 11111", bcrypt.hashSync("digitquo@123", 10), "admin", nowIso());
   insert.run("Demo Shopper", "user@nexora.local", "+91 90000 22222", bcrypt.hashSync("User123!", 10), "user", nowIso());
 };
 
@@ -91,7 +91,7 @@ const ensureCatalog = () => {
         product.stock,
         product.featured,
         product.popular,
-        null,
+        product.image_url || null,
         null,
         JSON.stringify(product.specs),
         nowIso(),

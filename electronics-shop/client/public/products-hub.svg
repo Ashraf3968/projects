@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-labelledby="title desc">
+  <title id="title">USB-C hub product artwork</title>
+  <desc id="desc">Illustrated multiport USB-C hub with cable and ports.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+    <linearGradient id="hub" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#cbd5e1"/>
+      <stop offset="100%" stop-color="#64748b"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <circle cx="680" cy="130" r="120" fill="#38bdf8" opacity=".12"/>
+  <circle cx="150" cy="480" r="150" fill="#34d399" opacity=".12"/>
+  <rect x="180" y="230" width="430" height="128" rx="30" fill="url(#hub)"/>
+  <rect x="220" y="274" width="62" height="16" rx="8" fill="#0f172a"/>
+  <rect x="300" y="274" width="50" height="16" rx="8" fill="#0f172a"/>
+  <rect x="370" y="274" width="50" height="16" rx="8" fill="#0f172a"/>
+  <rect x="442" y="268" width="36" height="28" rx="6" fill="#0f172a"/>
+  <rect x="494" y="268" width="36" height="28" rx="6" fill="#0f172a"/>
+  <rect x="548" y="266" width="22" height="32" rx="8" fill="#0f172a"/>
+  <path d="M610 288h70c24 0 44-20 44-44v-54" fill="none" stroke="#cbd5e1" stroke-width="18" stroke-linecap="round"/>
+  <rect x="710" y="152" width="30" height="56" rx="12" fill="#cbd5e1"/>
+  <text x="60" y="520" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="40" font-weight="700">CoreDock 9-in-1 Hub</text>
+</svg>

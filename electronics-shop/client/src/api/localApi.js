@@ -32,6 +32,7 @@ const productSeeds = [
     category: "mobiles",
     name: "Astra X Pro 5G",
     slug: "astra-x-pro-5g",
+    image_url: "/products-mobile.svg",
     short_description: "Flagship smartphone with pro camera and all-day battery.",
     description: "Astra X Pro 5G delivers smooth performance, a vivid AMOLED display, and advanced imaging for creators and professionals.",
     price: 79999,
@@ -45,6 +46,7 @@ const productSeeds = [
     category: "laptops",
     name: "VoltBook Ultra 14",
     slug: "voltbook-ultra-14",
+    image_url: "/products-laptop.svg",
     short_description: "Thin premium laptop for work, design, and travel.",
     description: "VoltBook Ultra pairs a lightweight aluminum build with long battery life and a color-accurate display.",
     price: 112500,
@@ -58,6 +60,7 @@ const productSeeds = [
     category: "headphones",
     name: "Pulse ANC Studio",
     slug: "pulse-anc-studio",
+    image_url: "/products-headphones.svg",
     short_description: "Wireless noise-canceling headphones with premium sound.",
     description: "Pulse ANC Studio is tuned for travel, office, and immersive music sessions with adaptive noise cancellation.",
     price: 18999,
@@ -71,6 +74,7 @@ const productSeeds = [
     category: "smart-watches",
     name: "Nova Watch S4",
     slug: "nova-watch-s4",
+    image_url: "/products-watch.svg",
     short_description: "Health, fitness, and productivity in one elegant smartwatch.",
     description: "Nova Watch S4 brings premium materials, deep health tracking, and crisp notifications to your wrist.",
     price: 24999,
@@ -84,6 +88,7 @@ const productSeeds = [
     category: "tvs",
     name: "VisionMax QLED 65",
     slug: "visionmax-qled-65",
+    image_url: "/products-tv.svg",
     short_description: "Cinema-grade 4K QLED TV with rich contrast and smart features.",
     description: "VisionMax QLED 65 is built for living rooms that demand striking brightness, sound, and streaming performance.",
     price: 94999,
@@ -97,6 +102,7 @@ const productSeeds = [
     category: "accessories",
     name: "CoreDock 9-in-1 Hub",
     slug: "coredock-9-in-1-hub",
+    image_url: "/products-hub.svg",
     short_description: "Professional USB-C hub for creators and remote teams.",
     description: "CoreDock expands your workspace with display, ethernet, charging, and storage options in one compact hub.",
     price: 6999,
@@ -164,7 +170,7 @@ const createInitialDb = () => {
       stock: product.stock,
       featured: product.featured,
       popular: product.popular,
-      image_url: null,
+      image_url: product.image_url || null,
       video_url: "",
       specs: product.specs,
       created_at: createdAt,
@@ -204,7 +210,7 @@ const createInitialDb = () => {
   }));
 
   const users = [
-    { id: 1, name: "Admin User", email: "admin@nexora.local", phone: "+91 99999 11111", password: "Admin123!", role: "admin", created_at: createdAt },
+    { id: 1, name: "Admin User", email: "admin@digitquo.com", phone: "+91 99999 11111", password: "digitquo@123", role: "admin", created_at: createdAt },
     { id: 2, name: "Demo Shopper", email: "user@nexora.local", phone: "+91 99999 22222", password: "User123!", role: "user", created_at: createdAt }
   ];
 
@@ -221,10 +227,28 @@ const createInitialDb = () => {
   };
 };
 
+const migrateDb = (db) => {
+  const productImageMap = Object.fromEntries(productSeeds.map((item) => [item.slug, item.image_url || null]));
+  db.products = db.products.map((item) => ({
+    ...item,
+    image_url: item.image_url || productImageMap[item.slug] || null
+  }));
+
+  const admin = db.users.find((item) => item.role === "admin");
+  if (admin) {
+    admin.email = "admin@digitquo.com";
+    admin.password = "digitquo@123";
+  }
+
+  return db;
+};
+
 const readDb = () => {
   const existing = localStorage.getItem(STORAGE_KEY);
   if (existing) {
-    return JSON.parse(existing);
+    const migrated = migrateDb(JSON.parse(existing));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(migrated));
+    return migrated;
   }
   const initial = createInitialDb();
   localStorage.setItem(STORAGE_KEY, JSON.stringify(initial));
@@ -379,8 +403,8 @@ export const localApi = {
 
   async login(payload) {
     const db = readDb();
-    const email = (payload.email || "").trim().toLowerCase();
-    const user = db.users.find((item) => item.email.toLowerCase() === email && item.password === payload.password);
+    const identifier = (payload.email || "").trim().toLowerCase();
+    const user = db.users.find((item) => (item.email.toLowerCase() === identifier || item.name.toLowerCase() === identifier) && item.password === payload.password);
     if (!user) throw new Error("Invalid email or password.");
     return { token: `local-${user.id}`, user: publicUser(user) };
   },

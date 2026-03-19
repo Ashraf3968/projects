@@ -1,4 +1,4 @@
-# Electronics Shop
+ï»¿# Electronics Shop
 
 Production-ready local-first electronics ecommerce starter built with React + Vite on the frontend and Express + SQLite on the backend.
 
@@ -23,7 +23,7 @@ Production-ready local-first electronics ecommerce starter built with React + Vi
 
 ## Demo Accounts
 
-- Admin: `admin@nexora.local` / `Admin123!`
+- Admin: `admin@digitquo.com` / `digitquo@123`
 - User: `user@nexora.local` / `User123!`
 
 ## Project Structure
@@ -31,31 +31,31 @@ Production-ready local-first electronics ecommerce starter built with React + Vi
 ```text
 electronics-shop/
 +- client/
-¦  +- public/
-¦  +- src/
-¦  ¦  +- api/
-¦  ¦  +- components/
-¦  ¦  +- context/
-¦  ¦  +- hooks/
-¦  ¦  +- lib/
-¦  ¦  +- pages/
-¦  ¦  +- styles/
-¦  +- index.html
-¦  +- package.json
-¦  +- tailwind.config.js
-¦  +- vite.config.js
+Â¦  +- public/
+Â¦  +- src/
+Â¦  Â¦  +- api/
+Â¦  Â¦  +- components/
+Â¦  Â¦  +- context/
+Â¦  Â¦  +- hooks/
+Â¦  Â¦  +- lib/
+Â¦  Â¦  +- pages/
+Â¦  Â¦  +- styles/
+Â¦  +- index.html
+Â¦  +- package.json
+Â¦  +- tailwind.config.js
+Â¦  +- vite.config.js
 +- server/
-¦  +- data/
-¦  +- src/
-¦  ¦  +- config/
-¦  ¦  +- controllers/
-¦  ¦  +- db/
-¦  ¦  +- middleware/
-¦  ¦  +- routes/
-¦  ¦  +- services/
-¦  ¦  +- uploads/
-¦  ¦  +- utils/
-¦  +- package.json
+Â¦  +- data/
+Â¦  +- src/
+Â¦  Â¦  +- config/
+Â¦  Â¦  +- controllers/
+Â¦  Â¦  +- db/
+Â¦  Â¦  +- middleware/
+Â¦  Â¦  +- routes/
+Â¦  Â¦  +- services/
+Â¦  Â¦  +- uploads/
+Â¦  Â¦  +- utils/
+Â¦  +- package.json
 +- .env.example
 +- package.json
 +- README.md
@@ -167,3 +167,4 @@ npm run start --prefix server
 - Product images are uploaded to `server/src/uploads` and served from `/uploads/...`.
 - Branding is editable from the admin dashboard and reflected across the storefront.
 - The structure is intentionally modular so SQLite can be swapped later for another database implementation.
+

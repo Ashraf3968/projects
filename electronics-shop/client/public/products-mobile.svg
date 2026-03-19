@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-labelledby="title desc">
+  <title id="title">Smartphone product artwork</title>
+  <desc id="desc">Illustrated premium smartphone with gradient lighting.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+    <linearGradient id="phone" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#0ea5e9"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <circle cx="170" cy="120" r="120" fill="#22d3ee" opacity=".12"/>
+  <circle cx="640" cy="470" r="170" fill="#34d399" opacity=".12"/>
+  <rect x="280" y="70" width="240" height="460" rx="38" fill="#020617" stroke="#94a3b8" stroke-opacity=".3"/>
+  <rect x="298" y="95" width="204" height="410" rx="24" fill="url(#phone)"/>
+  <circle cx="400" cy="114" r="8" fill="#0f172a"/>
+  <rect x="342" y="126" width="116" height="8" rx="4" fill="#e0f2fe" opacity=".75"/>
+  <circle cx="362" cy="422" r="28" fill="#e0f2fe" opacity=".24"/>
+  <circle cx="440" cy="422" r="28" fill="#e0f2fe" opacity=".18"/>
+  <text x="60" y="510" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="40" font-weight="700">Astra X Pro 5G</text>
+</svg>

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-labelledby="title desc">
+  <title id="title">Laptop product artwork</title>
+  <desc id="desc">Illustrated slim laptop with neon screen.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#020617"/>
+      <stop offset="100%" stop-color="#172554"/>
+    </linearGradient>
+    <linearGradient id="screen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#67e8f9"/>
+      <stop offset="100%" stop-color="#4ade80"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <circle cx="120" cy="120" r="90" fill="#60a5fa" opacity=".13"/>
+  <circle cx="690" cy="160" r="120" fill="#34d399" opacity=".12"/>
+  <rect x="200" y="120" width="400" height="250" rx="18" fill="#0f172a" stroke="#cbd5e1" stroke-opacity=".25"/>
+  <rect x="222" y="140" width="356" height="208" rx="10" fill="url(#screen)"/>
+  <path d="M150 410h500l40 55H110z" fill="#94a3b8"/>
+  <rect x="320" y="425" width="160" height="10" rx="5" fill="#475569"/>
+  <text x="60" y="520" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="40" font-weight="700">VoltBook Ultra 14</text>
+</svg>
