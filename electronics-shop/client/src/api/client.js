@@ -14,10 +14,18 @@ const request = async (path, options = {}) => {
     headers
   });
 
-  const data = await response.json().catch(() => ({}));
+  const contentType = response.headers.get("content-type") || "";
+  const isJson = contentType.includes("application/json");
+  const data = isJson ? await response.json().catch(() => ({})) : {};
+
   if (!response.ok) {
     throw new Error(data.message || "Request failed.");
   }
+
+  if (!isJson) {
+    throw new Error("Store API is not reachable. Set VITE_API_BASE_URL in Vercel or deploy the backend API.");
+  }
+
   return data;
 };
 
